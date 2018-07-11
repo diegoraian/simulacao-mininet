@@ -19,20 +19,20 @@ def myNetwork():
     c0=net.addController(name='c0',controller=RemoteController,protocol='tcp',port=6633)
 
     info( '*** Add switches\n')
-    s1 = net.addSwitch('s1', cls=OVSKernelSwitch)
-    s3 = net.addSwitch('s3', cls=OVSKernelSwitch)
-    s2 = net.addSwitch('s2', cls=OVSKernelSwitch)
+    s1 = net.addSwitch('s1')
+    s2 = net.addSwitch('s2')
+    s3 = net.addSwitch('s3')
 
     info( '*** Add hosts\n')
-    h1 = net.addHost('h1', cls=Host, ip='10.10.1.1', defaultRoute=None)
-    h2 = net.addHost('h2', cls=Host, ip='10.10.1.2', defaultRoute=None)
-    h3 = net.addHost('h3', cls=Host, ip='10.10.1.3', defaultRoute=None)
-    h4 = net.addHost('h4', cls=Host, ip='10.10.2.1', defaultRoute=None)
-    h5 = net.addHost('h5', cls=Host, ip='10.10.2.2', defaultRoute=None)
-    h6 = net.addHost('h6', cls=Host, ip='10.10.2.3', defaultRoute=None)
-    h7 = net.addHost('h7', cls=Host, ip='10.10.3.1', defaultRoute=None)
-    h8 = net.addHost('h8', cls=Host, ip='10.10.3.2', defaultRoute=None)
-    h9 = net.addHost('h9', cls=Host, ip='10.10.3.3', defaultRoute=None)
+    h1 = net.addHost('h1', cls=Host, ip='10.10.1.1')
+    h2 = net.addHost('h2', cls=Host, ip='10.10.1.2')
+    h3 = net.addHost('h3', cls=Host, ip='10.10.1.3')
+    h4 = net.addHost('h4', cls=Host, ip='10.10.2.1')
+    h5 = net.addHost('h5', cls=Host, ip='10.10.2.2')
+    h6 = net.addHost('h6', cls=Host, ip='10.10.2.3')
+    h7 = net.addHost('h7', cls=Host, ip='10.10.3.1')
+    h8 = net.addHost('h8', cls=Host, ip='10.10.3.2')
+    h9 = net.addHost('h9', cls=Host, ip='10.10.3.3')
 
     info( '*** Add links\n')
     net.addLink(h1, s1)
@@ -92,7 +92,8 @@ def myNetwork():
         for j in xrange(9):
             h_dst = net.get('h%d' % (j+1))
             h.setARP(h_dst.IP(), h_dst.MAC())
-
+            
+            
     CLI(net)
     net.stop()
 
