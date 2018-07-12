@@ -13,7 +13,6 @@ from subprocess import call
 def myNetwork():
 
     net = Mininet( topo=None, build=False)
-    #ipBase='10.10.0.0/16')
                      
     info( '*** Adding controller\n' )
     c0=net.addController(name='c0',controller=RemoteController,protocol='tcp',port=6633)
@@ -87,11 +86,11 @@ def myNetwork():
     #s3.cmd('ovs-ofctl add-flow s3 arp,nw_dst=10.10.1.0/255.255.255.0,action=output:4')
     #s3.cmd('ovs-ofctl add-flow s3 arp,nw_dst=10.10.2.0/255.255.255.0,action=output:5')
     for i in xrange(9):
-        h = net.get('h%d' % (i + 1))
-        h.cmd("ip route add default dev %s-eth0" % ('h%d' % (i + 1)))
-        for j in xrange(9):
-            h_dst = net.get('h%d' % (j+1))
-            h.setARP(h_dst.IP(), h_dst.MAC())
+      h = net.get('h%d' % (i + 1))
+      h.cmd("ip route add default dev %s-eth0" % ('h%d' % (i + 1)))
+      for j in xrange(9):
+        h_dst = net.get('h%d' % (j+1))
+        h.setARP(h_dst.IP(), h_dst.MAC())
             
             
     CLI(net)
