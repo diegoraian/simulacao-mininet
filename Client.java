@@ -1,9 +1,8 @@
-package versao;
-
 import java.io.IOException;
 import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,12 +35,16 @@ public class Client {
 
 		while (true) {
 			try {
+                    serverSocketUDP = new DatagramSocket(PORTA);
 				
-				
-		
+                    byte[] bufferEnvio = new byte[12];
+                    InetAddress ipServidor = InetAddress.getByName(IP_SERVIDOR);
+					DatagramPacket pacoteEnvio = new DatagramPacket(bufferEnvio, bufferEnvio.length,ipServidor, PORTA);
+					serverSocketUDP.send(pacoteEnvio);
+					Thread.currentThread().sleep(2000);		
 					
-					Thread.currentThread().sleep(2000);
-					serverSocketUDP = new DatagramSocket(PORTA);
+
+					
 					Date date = new Date();
 					date.getTime();
 					byte[] buffer = new byte[28];
