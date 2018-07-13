@@ -3,12 +3,14 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Client {
 	private static final Integer PORTA = 6001;
+	private static String IP_SERVIDOR = null;
 
 	public static void atualizarHorario(Date data) throws IOException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY hh:mm");
@@ -22,13 +24,28 @@ public class Client {
 		Runtime.getRuntime().exec("date -s "+dia+"/"+mes+"/"+ano+" "+hora+":"+minuto);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println("Cliente está funcionando");
+		if(args[0] != null) {
+		  IP_SERVIDOR = args[0];
+		  System.out.println("IP DO SERVIDOR:");
+		  System.out.println(IP_SERVIDOR);
+		}else{
+			throw new Exception("Não foi inserido o endereço do servidor NTP_FAKE ");
+		};
 		DatagramSocket serverSocketUDP = null;
 		while (true) {
 			try {
+				
 					Thread.currentThread().sleep(2000);
-					serverSocketUDP = new DatagramSocket(PORTA);
+					serverSocketUDP = new DatagramSocket();
+					InetAddress ip = InetAddress.getLocalHost();
+					byte[] bufferEnvio = ip.getHostAddress().getBytes(StandardCharsets.UTF_8);
+					System.out.println(bufferEnvio.length);
+					DatagramPacket pacoteEnvio = new DatagramPacket(bufferEnvio, bufferEnvio.length, ip, PORTA);
+					serverSocketUDP.send(pacoteEnvio);
+					
+					
 					Date date = new Date();
 					date.getTime();
 					byte[] buffer = new byte[28];
