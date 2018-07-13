@@ -11,7 +11,7 @@ public class Server {
 	private static final String IP = "192.168.1.15";
 
 	public static void main(String[] args) {
-
+		System.out.println("O servidor NTP está no ar!");
 		DatagramSocket serverSocketUDP = null;
 		while (true) {
 			try {
@@ -20,6 +20,7 @@ public class Server {
 					byte[] buffer = new byte[12];
 					DatagramPacket pacote = new DatagramPacket(buffer, 12);
 					serverSocketUDP.receive(pacote);
+					pacote.getAddress();
 					String ipServidor = new String(pacote.getData(),StandardCharsets.UTF_8);
 					System.out.println("Pacote recebido " + ipServidor);
 					if(ipServidor != null && !ipServidor.isEmpty()) {

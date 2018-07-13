@@ -25,8 +25,9 @@ public class Client {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println("Cliente está funcionando");
-		if(args[0] != null) {
+		
+		if(args.length > 0 &&  args[0] != null) {
+		  System.out.println("Cliente está funcionando");
 		  IP_SERVIDOR = args[0];
 		  System.out.println("IP DO SERVIDOR:");
 		  System.out.println(IP_SERVIDOR);
