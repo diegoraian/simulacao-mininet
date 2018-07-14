@@ -1,3 +1,4 @@
+package versao;
 
 import java.io.IOException;
 import java.net.BindException;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 public class Client {
 	private static final Integer PORTA = 6001;
-
+	private static String IP_SERVIDOR =null;
 	public static void atualizarHorario(Date data) throws IOException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY hh:mm");
 		String dataString = dateFormat.format(data);
@@ -23,18 +24,22 @@ public class Client {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		
-		if(args.length > 0 &&  args[0] != null) {
-		  System.out.println("Cliente está funcionando");
-		  IP_SERVIDOR = args[0];
-		  System.out.println("IP DO SERVIDOR:");
-		  System.out.println(IP_SERVIDOR);
-		}else{
-			throw new Exception("Não foi inserido o endereço do servidor NTP_FAKE ");
-		};
 		DatagramSocket serverSocketUDP = null;
+		   if(args.length > 0 &&  args[0] != null) {
+				  System.out.println("Cliente está funcionando");
+				  IP_SERVIDOR = args[0];
+				  System.out.println("IP DO SERVIDOR:");
+				  System.out.println(IP_SERVIDOR);
+				}else{
+					throw new Exception("Não foi inserido o endereço do servidor NTP_FAKE ");
+				};
+
 		while (true) {
 			try {
+				
+				
+		
+					
 					Thread.currentThread().sleep(2000);
 					serverSocketUDP = new DatagramSocket(PORTA);
 					Date date = new Date();
