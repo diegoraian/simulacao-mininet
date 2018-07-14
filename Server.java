@@ -11,30 +11,21 @@ public class Server {
 	private static final String IP = "192.168.1.15";
 
 	public static void main(String[] args) {
-		System.out.println("O servidor NTP está no ar!");
+
 		DatagramSocket serverSocketUDP = null;
 		while (true) {
 			try {
-					serverSocketUDP = new DatagramSocket(PORTA);
 					Thread.currentThread().sleep(1000);
-					byte[] buffer = new byte[12];
-					DatagramPacket pacote = new DatagramPacket(buffer, 12);
-					serverSocketUDP.receive(pacote);
-					pacote.getAddress();
-					String ipServidor = new String(pacote.getData(),StandardCharsets.UTF_8);
-					System.out.println("Pacote recebido " + ipServidor);
-					if(ipServidor != null && !ipServidor.isEmpty()) {
-						
-						Date date = new Date();
-						date.getTime();
-						InetAddress ip = InetAddress.getByName(ipServidor);
-						String mensagemEnvio = date.toString();
-						byte[] bufferEnvio = mensagemEnvio.getBytes(StandardCharsets.UTF_8);
-						System.out.println(bufferEnvio.length);
-						DatagramPacket pacoteEnvio = new DatagramPacket(bufferEnvio, bufferEnvio.length, ip, PORTA);
-						serverSocketUDP.send(pacoteEnvio);
-						System.out.println("Pacote enviado " + mensagemEnvio);
-					}
+					serverSocketUDP = new DatagramSocket(PORTA);
+					Date date = new Date();
+					date.getTime();
+					InetAddress ip = InetAddress.getByName(IP);
+					String mensagem = date.toString();
+					byte[] buffer = mensagem.getBytes(StandardCharsets.UTF_8);
+					System.out.println(buffer.length);
+					DatagramPacket pacote = new DatagramPacket(buffer, buffer.length, ip, PORTA);
+					serverSocketUDP.send(pacote);
+					System.out.println("Pacote enviado " + mensagem);
 					serverSocketUDP.close();
 	
 			} catch(BindException be) {
