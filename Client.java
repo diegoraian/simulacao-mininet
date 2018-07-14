@@ -24,6 +24,8 @@ public class Client {
 	
 	public static void main(String[] args) throws Exception {
 		DatagramSocket serverSocketUDP = null;
+                    serverSocketUDP = new DatagramSocket(PORTA);
+
 		   if(args.length > 0 &&  args[0] != null) {
 				  System.out.println("Cliente está funcionando");
 				  IP_SERVIDOR = args[0];
@@ -35,28 +37,29 @@ public class Client {
 
 		while (true) {
 			try {
-                    serverSocketUDP = new DatagramSocket(PORTA);
 				
-                    String mensagem = "Hello";
-                    byte[] bufferEnvio = new byte[60];
-                    InetAddress ipServidor = InetAddress.getByName(IP_SERVIDOR);
+                                        String mensagem = "Hello";
+                                        byte[] bufferEnvio = new byte[60];
+                                         InetAddress ipServidor = InetAddress.getByName(IP_SERVIDOR);
 					DatagramPacket pacoteEnvio = new DatagramPacket(mensagem.getBytes(), mensagem.getBytes().length,ipServidor, PORTA);
 					serverSocketUDP.send(pacoteEnvio);
 					Thread.currentThread().sleep(2000);		
 					
 
-//					
+					
 //					Date date = new Date();
 //					date.getTime();
-//					byte[] buffer = new byte[28];
-//					DatagramPacket pacote = new DatagramPacket(buffer, 28);
-//					serverSocketUDP.receive(pacote);
-//					
-//					String mensagem = new String(pacote.getData(),StandardCharsets.UTF_8);
-//					System.out.println("Pacote recebido " + mensagem);
+					byte[] buffer = new byte[28];
+					DatagramPacket pacote = new DatagramPacket(buffer, 28);
+					serverSocketUDP.receive(pacote);
+					
+					String mensagemRecebida = new String(pacote.getData(),StandardCharsets.UTF_8);
+					System.out.println("Pacote recebido " + mensagemRecebida);
 //					serverSocketUDP.close();
-//					Date dataRecebida= new Date(new Date().parse(mensagem));					
-//					atualizarHorario(dataRecebida);
+                                        if(!mensagemRecebida.isEmpty()){
+				     		Date dataRecebida= new Date(new Date().parse(mensagemRecebida));					
+						atualizarHorario(dataRecebida);
+					}
 			} catch(BindException be) {
 				System.out.println(be.getMessage());
 			}catch (Exception e) {

@@ -18,25 +18,26 @@ public class Server {
 				
 				Thread.currentThread().sleep(1000);
 				byte[] bufferConsulta = new byte[5];
-				DatagramPacket pacote = new DatagramPacket(bufferConsulta, 5);
+				DatagramPacket pacote = new DatagramPacket(bufferConsulta,5);
 				serverSocketUDP.receive(pacote);
 				if(pacote.getData() != null && pacote.getData().length > 0) {
-					String ipServidor = new String(pacote.getData(),StandardCharsets.UTF_8);
-					System.out.println("Pacote recebido " + ipServidor);
+					String mensagemRecebida = new String(pacote.getData(),StandardCharsets.UTF_8);
+					System.out.println("Pacote recebido " + mensagemRecebida);
+				        InetAddress ip = pacote.getAddress();
+				
+					if(ip != null ) {
+					
+						Date date = new Date();
+						date.getTime();
+						String mensagemEnviada = date.toString();
+						byte[] buffer = mensagemEnviada.getBytes(StandardCharsets.UTF_8);
+						System.out.println(buffer.length);
+						DatagramPacket pacoteEnvio = new DatagramPacket(buffer, buffer.length, ip, PORTA);
+						serverSocketUDP.send(pacoteEnvio);
+						System.out.println("Pacote enviado " + mensagemEnviada);
+						//serverSocketUDP.close();
+					}
 				}
-//				if(ipServidor != null && !ipServidor.isEmpty()) {
-//					
-//					Date date = new Date();
-//					date.getTime();
-//					InetAddress ip = InetAddress.getByName(ipServidor);
-//					String mensagem = date.toString();
-//					byte[] buffer = mensagem.getBytes(StandardCharsets.UTF_8);
-//					System.out.println(buffer.length);
-//					DatagramPacket pacoteEnvio = new DatagramPacket(buffer, buffer.length, ip, PORTA);
-//					serverSocketUDP.send(pacoteEnvio);
-//					System.out.println("Pacote enviado " + mensagem);
-//					serverSocketUDP.close();
-//				}
 //				serverSocketUDP.close();
 			} catch(BindException be) {
 				System.out.println(be.getMessage());
