@@ -22,8 +22,16 @@ public class Client {
 		Runtime.getRuntime().exec("date -s "+dia+"/"+mes+"/"+ano+" "+hora+":"+minuto);
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("Cliente está funcionando");
+	public static void main(String[] args) throws Exception {
+		
+		if(args.length > 0 &&  args[0] != null) {
+		  System.out.println("Cliente está funcionando");
+		  IP_SERVIDOR = args[0];
+		  System.out.println("IP DO SERVIDOR:");
+		  System.out.println(IP_SERVIDOR);
+		}else{
+			throw new Exception("Não foi inserido o endereço do servidor NTP_FAKE ");
+		};
 		DatagramSocket serverSocketUDP = null;
 		while (true) {
 			try {
