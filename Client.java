@@ -37,25 +37,26 @@ public class Client {
 			try {
                     serverSocketUDP = new DatagramSocket(PORTA);
 				
-                    byte[] bufferEnvio = new byte[12];
+                    String mensagem = "Hello";
+                    byte[] bufferEnvio = new byte[60];
                     InetAddress ipServidor = InetAddress.getByName(IP_SERVIDOR);
-					DatagramPacket pacoteEnvio = new DatagramPacket(bufferEnvio, bufferEnvio.length,ipServidor, PORTA);
+					DatagramPacket pacoteEnvio = new DatagramPacket(mensagem.getBytes(), mensagem.getBytes().length,ipServidor, PORTA);
 					serverSocketUDP.send(pacoteEnvio);
 					Thread.currentThread().sleep(2000);		
 					
 
-					
-					Date date = new Date();
-					date.getTime();
-					byte[] buffer = new byte[28];
-					DatagramPacket pacote = new DatagramPacket(buffer, 28);
-					serverSocketUDP.receive(pacote);
-					
-					String mensagem = new String(pacote.getData(),StandardCharsets.UTF_8);
-					System.out.println("Pacote recebido " + mensagem);
-					serverSocketUDP.close();
-					Date dataRecebida= new Date(new Date().parse(mensagem));					
-					atualizarHorario(dataRecebida);
+//					
+//					Date date = new Date();
+//					date.getTime();
+//					byte[] buffer = new byte[28];
+//					DatagramPacket pacote = new DatagramPacket(buffer, 28);
+//					serverSocketUDP.receive(pacote);
+//					
+//					String mensagem = new String(pacote.getData(),StandardCharsets.UTF_8);
+//					System.out.println("Pacote recebido " + mensagem);
+//					serverSocketUDP.close();
+//					Date dataRecebida= new Date(new Date().parse(mensagem));					
+//					atualizarHorario(dataRecebida);
 			} catch(BindException be) {
 				System.out.println(be.getMessage());
 			}catch (Exception e) {
